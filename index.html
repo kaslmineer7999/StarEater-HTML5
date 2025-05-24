@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+	<head>
+		<title>StarEater HTML5 port</title>
+		<meta charset="utf-8"/>
+		<style>
+			body{
+				background:black;
+				color:white;
+				font-family:monospace;
+				font-size:1.25rem;
+			}
+			#area{
+				position:relative;
+				width:80ch;
+				height:40ch;
+				border:0.125rem solid gray;
+			}
+			#player{
+				position:absolute;
+				color:red;
+			}
+			#victim{
+				position:absolute;
+				color:yellow;
+			}
+			#info-bar:after{
+				content:'';
+				clear:both;
+				display:table;
+			}
+			#info-bar > div:nth-child(1){
+				float:left;
+			}
+			#info-bar > div:nth-child(2){
+				float:right;
+			}
+			.button,button{
+				text-decoration:none;
+				color:black;
+				display:inline-block;
+				margin:0.625rem;
+				padding:1rem 2rem;
+				background:linear-gradient(white,gray);
+			}
+			.button:hover,button:hover{
+				color:#3366CC;
+				text-decoration:underline;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="area">
+			<div id="info-bar">
+				<div>score: <span id="score">0</span></div>
+				<div>time left: <span id="time">180</span></div>
+			</div>
+			<div id="player" style="top:2ch;left:0ch;">X</div>
+			<div id="victim">*</div>
+		</div>
+		<a href="http://www.gnu.org/licenses/gpl-3.0.txt"           class="button" target="_blank">License</a>
+		<a href="http://GitHub.com/kaslmineer7999/StarEater-HTML5/" class="button" target="_blank">Source Code</a>
+		<script>
+			const player = document.getElementById('player');
+			const victim = document.getElementById('victim');
+			function VictimPos(){
+				victim.style.top  = Math.floor(Math.random() * 36 + 2) + 'ch';
+				victim.style.left = Math.floor(Math.random() * 80    ) + 'ch';
+			};
+			VictimPos();
+			const TimeCount = setInterval(function(){
+				let time = +document.getElementById('time').innerHTML - 1;
+				document.getElementById('time').innerHTML = time + '';
+				if (time < 1){
+					clearInterval(TimeCount);
+					document.getElementById('area').innerHTML = 'you timedout.';
+				};
+			},1000);
+			document.addEventListener('keydown',function(input){
+				if (input.key == 'w'){
+					let top = parseFloat(player.style.top) - 1;
+					if (top < 2) top = 2;
+					player.style.top = top + 'ch';
+				};
+				if (input.key == 's'){
+					let top = parseFloat(player.style.top) + 1;
+					if (top > 38) top = 38;
+					player.style.top = top + 'ch';
+				};
+				if (input.key == 'd'){
+					let left = parseFloat(player.style.left) + 1;
+					if (left > 79) left = 79;
+					player.style.left = left + 'ch';
+				};
+				if (input.key == 'a'){
+					let left = parseFloat(player.style.left) - 1;
+					if (left < 0) left = 0;
+					player.style.left = left + 'ch';
+				};
+				if (player.style.top == victim.style.top){
+					if (player.style.left == victim.style.left){
+						let score = +document.getElementById('score').innerHTML + 1;
+						document.getElementById('score').innerHTML = score + '';
+						VictimPos();
+					};
+				};
+			});
+		</script>
+	</body>
+</html>
