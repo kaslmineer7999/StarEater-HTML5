@@ -24,10 +24,8 @@
 				position:absolute;
 				color:yellow;
 			}
-			#info-bar:after{
-				content:'';
-				clear:both;
-				display:table;
+			#info-bar{
+				overflow:auto;
 			}
 			#info-bar > div:nth-child(1){
 				float:left;
@@ -47,16 +45,40 @@
 				color:#3366CC;
 				text-decoration:underline;
 			}
+			#splash,#splash *{
+				position:relative;
+				display:block;
+				width:100%;
+				height:99%;
+				margin:-2ch 0 0 0;
+				padding:0;
+				background:black;
+			}
 		</style>
 	</head>
 	<body>
 		<div id="area">
 			<div id="info-bar">
 				<div>score: <span id="score">0</span></div>
-				<div>time left: <span id="time">180</span></div>
+				<div>time left: <span id="time">181</span></div>
 			</div>
 			<div id="player" style="top:2ch;left:0ch;">X</div>
 			<div id="victim">*</div>
+			<div id="splash"><pre>           _  __            __
+          | |/ /   _________\ \     __/|_
+          |   /   |__________\ \   |    /
+          /   |   |__________/ /   /_ __|
+         /_/|_|       Eat   /_/      |/
+
+   _____ __             ______      __
+  / ___// /_____ ______/ ____/___ _/ /____  _____
+  \__ \/ __/ __ `/ ___/ __/ / __ `/ __/ _ \/ ___/
+ ___/ / /_/ /_/ / /  / /___/ /_/ / /_/  __/ /
+/____/\__/\__,_/_/  /_____/\__,_/\__/\___/_/
+
+
+StarEater-HTML5  Copyright (C) 2024  kaslmineer7999
+This program comes with ABSOLUTELY NO WARRANTY</pre></div>
 		</div>
 		<a href="http://www.gnu.org/licenses/gpl-3.0.txt"           class="button" target="_blank">License</a>
 		<a href="http://GitHub.com/kaslmineer7999/StarEater-HTML5/" class="button" target="_blank">Source Code</a>
@@ -68,6 +90,7 @@
 				victim.style.left = Math.floor(Math.random() * 80    ) + 'ch';
 			};
 			VictimPos();
+			setTimeout(function(){document.getElementById('splash').style.display = 'none'},1000)
 			const TimeCount = setInterval(function(){
 				let time = +document.getElementById('time').innerHTML - 1;
 				document.getElementById('time').innerHTML = time + '';
@@ -81,17 +104,17 @@
 					let top = parseFloat(player.style.top) - 1;
 					if (top < 2) top = 2;
 					player.style.top = top + 'ch';
-				};
+				} else
 				if (input.key == 's'){
 					let top = parseFloat(player.style.top) + 1;
 					if (top > 38) top = 38;
 					player.style.top = top + 'ch';
-				};
+				} else
 				if (input.key == 'd'){
 					let left = parseFloat(player.style.left) + 1;
 					if (left > 79) left = 79;
 					player.style.left = left + 'ch';
-				};
+				} else
 				if (input.key == 'a'){
 					let left = parseFloat(player.style.left) - 1;
 					if (left < 0) left = 0;
